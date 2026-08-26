@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NEBULA · simulated trading</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+<div class="terminal" id="app">
+  <!-- TOP BAR -->
+  <div class="top-bar">
+    <div class="logo"><h1><i class="fas fa-chart-line"></i> NEBULA·SIM</h1></div>
+    <div class="account-panel">
+      <div class="account-item"><i class="fas fa-user-astronaut"></i> Trader <span>ALPHA</span></div>
+      <div class="account-item"><i class="fas fa-wallet"></i> Cash <span id="cashDisplay">100,000.00</span></div>
+      <div class="account-item"><i class="fas fa-coins"></i> Equity <span id="equityDisplay">100,000.00</span></div>
+      <div class="badge"><i class="fas fa-shield-alt"></i> SIM · PAPER</div>
+    </div>
+  </div>
+
+  <!-- MARKET FEED -->
+  <div class="market-feed">
+    <div class="feed-label"><span class="live-dot"></span> <i class="fas fa-bolt"></i> LIVE FEED</div>
+    <div class="ticker-scroll" id="tickerContainer"></div>
+  </div>
+
+  <!-- GRID -->
+  <div class="grid-2col">
+    <!-- ORDER DESK -->
+    <div class="card">
+      <div class="card-header">
+        <h3><i class="fas fa-exchange-alt"></i> Order desk</h3>
+        <span style="font-size:0.7rem; background:#1e283b; padding:4px 14px; border-radius:40px; color:#8da5d0;">limit / market</span>
+      </div>
+      <div class="order-form">
+        <div class="order-row">
+          <select id="symbolSelect"></select>
+          <select id="orderType"><option value="market">Market</option><option value="limit">Limit</option></select>
+          <select id="orderSide"><option value="buy">BUY</option><option value="sell">SELL</option></select>
+        </div>
+        <div class="order-row">
+          <input type="number" id="orderQuantity" placeholder="Qty" value="10" step="1" min="1" />
+          <input type="number" id="orderPrice" placeholder="Limit price (opt)" step="0.01" min="0" />
+          <button class="btn btn-primary" id="placeOrderBtn"><i class="fas fa-paper-plane"></i> Place</button>
+        </div>
+        <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-top: 4px;">
+          <button class="btn btn-success btn-sm" id="marketBuyBtn"><i class="fas fa-arrow-up"></i> MKT BUY</button>
+          <button class="btn btn-danger btn-sm" id="marketSellBtn"><i class="fas fa-arrow-down"></i> MKT SELL</button>
+          <button class="btn btn-sm" id="clearLogBtn" style="background:#252f42;"><i class="fas fa-eraser"></i> clear</button>
+        </div>
+      </div>
+      <div class="order-log" id="orderLog"><div>⚡ system ready · place orders</div></div>
+    </div>
+
+    <!-- PORTFOLIO + RISK -->
+    <div class="card">
+      <div class="card-header">
+        <h3><i class="fas fa-briefcase"></i> Portfolio</h3>
+        <span id="positionsCount" style="font-size:0.8rem; background:#1d2638; padding:2px 12px; border-radius:40px;">0 positions</span>
+      </div>
+      <table class="portfolio-table">
+        <thead><tr><th>Symbol</th><th>Qty</th><th>Avg price</th><th>P&L</th></tr></thead>
+        <tbody id="portfolioBody"><tr><td colspan="4" style="text-align:center; color:#5f7193;">no positions</td></tr></tbody>
+      </table>
+      <div class="risk-badge">
+        <div class="risk-item"><span class="label"><i class="fas fa-flag"></i> Risk rules</span></div>
+        <div class="risk-item"><span class="label">Max loss / day</span> <span class="val" id="maxLossDisplay">-2,000</span></div>
+        <div class="risk-item"><span class="label">Concentration</span> <span class="val" id="concentrationDisplay">0%</span></div>
+        <div class="risk-item"><span class="label"><i class="fas fa-skull"></i> Drawdown</span> <span class="val risk-limit" id="drawdownDisplay">0%</span></div>
+      </div>
+      <div class="footer-actions">
+        <button class="btn btn-sm" id="resetAccountBtn" style="background:#312a3a; border-color:#4a3f5a;"><i class="fas fa-undo-alt"></i> Reset</button>
+        <button class="btn btn-sm" id="randomTradeBtn" style="background:#26334a;"><i class="fas fa-dice"></i> random</button>
+      </div>
+      <div style="margin-top: 14px;">
+        <div style="font-size:0.7rem; color:#6f86b0; margin-bottom: 4px;"><i class="fas fa-list-ul"></i> WATCHLIST (35+ stocks)</div>
+        <div class="watchlist-grid" id="watchlistContainer"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="js/config.js"></script>
+<script src="js/market.js"></script>
+<script src="js/account.js"></script>
+<script src="js/orderEngine.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
